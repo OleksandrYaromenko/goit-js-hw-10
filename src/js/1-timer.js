@@ -34,26 +34,26 @@ const options = {
   defaultDate: new Date(),
     minuteIncrement: 1,
   
-  onClose(selectedDates) {
-      const newData = new Date(selectedDates[0]).getTime();
-      const startData = Date.now()
+ onClose(selectedDates) {
+    const newData = new Date(selectedDates[0]).getTime();
+    const startData = Date.now()
 
-      if (newData >= startData) {
-          startBtn.disabled = false;
-          timeReturn = newData - startData
-          updateData(convertMs(timeReturn))
-      } else {
+    if (newData >= startData) {
+        startBtn.disabled = false;
+        timeReturn = newData - startData
+        updateData(convertMs(timeReturn));
+    } else {
         iziToast.error({
-    fontSize: 'large',
-        close: false,
-        position: 'topRight',
-        messageColor: 'white',
-        timeout: 2000,
-        backgroundColor: 'red',
-        message: ("Please choose a date in the future")
-});
-      }
-  },
+            fontSize: 'large',
+            close: false,
+            position: 'topRight',
+            messageColor: 'white',
+            timeout: 2000,
+            backgroundColor: 'red',
+            message: ("Please choose a date in the future")
+        });
+    }
+},
 };
 
 
@@ -74,13 +74,15 @@ function startTimer() {
 }
 
 function timer() {
-    if (timeReturn > 0) {
-        timeReturn -= 1000;
-        updateData(convertMs(timeReturn));
-    } else {
-        
-        clearInterval(intervalId);
-        input.disabled = false;
+    if (timeReturn >= 0) {
+        if (timeReturn === 0) {
+            clearInterval(intervalId);
+            input.disabled = false;
+            startBtn.disabled = false;
+        } else {
+            timeReturn -= 1000;
+            updateData(convertMs(timeReturn));
+        }
     }
 }
 
