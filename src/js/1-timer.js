@@ -75,12 +75,13 @@ function startTimer() {
 
 function timer() {
     if (timeReturn >= 0) {
-        if (timeReturn === 0) {
+        timeReturn -= 1000;
+        if (timeReturn < 0) { 
             clearInterval(intervalId);
             input.disabled = false;
             startBtn.disabled = false;
+            updateData({ days: '00', hours: '00', minutes: '00', seconds: '00' }); 
         } else {
-            timeReturn -= 1000;
             updateData(convertMs(timeReturn));
         }
     }
